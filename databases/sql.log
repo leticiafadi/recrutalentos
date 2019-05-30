@@ -53,3 +53,228 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
+timestamp: 2019-05-30T03:51:24.175000
+CREATE TABLE "curriculo"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "nome" CHAR(512) NOT NULL,
+    "cpf" CHAR(512) NOT NULL UNIQUE,
+    "contato" TEXT NOT NULL,
+    "endereco" TEXT,
+    "form_academica" TEXT,
+    "foto" CHAR(512),
+    "experiencia" TEXT,
+    "data_nascimento" DATE,
+    "objetivo_setor" CHAR(512)
+);
+success!
+timestamp: 2019-05-30T03:51:24.388000
+CREATE TABLE "entrevista"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "obsNegativas" TEXT,
+    "obsPositivas" TEXT,
+    "idCurriculo" INTEGER REFERENCES "curriculo" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T03:51:24.538000
+CREATE TABLE "dinamica"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "nome" CHAR(512),
+    "descricao" CHAR(512),
+    "tipo" CHAR(1),
+    "obsNegativas" TEXT,
+    "obsPositivas" TEXT,
+    "idCurriculo" INTEGER REFERENCES "curriculo" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T03:51:24.756000
+CREATE TABLE "teste"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "nome" CHAR(512),
+    "descricao" CHAR(512),
+    "tipo" CHAR(1),
+    "obsNegativas" TEXT,
+    "obsPositivas" TEXT,
+    "idCurriculo" INTEGER REFERENCES "curriculo" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T03:51:24.914000
+CREATE TABLE "vaga"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "nome" CHAR(512),
+    "form_academica" CHAR(512),
+    "experiencia" TEXT,
+    "localTrabalho" CHAR(512),
+    "horarioTrabalho" CHAR(512),
+    "salarioOferecido" DOUBLE,
+    "qtdVagas" INTEGER,
+    "qtdCandidatos" INTEGER,
+    "responsavelVaga" CHAR(512)
+);
+success!
+timestamp: 2019-05-30T03:51:25.090000
+CREATE TABLE "processo"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "etapa" INTEGER,
+    "idVaga" INTEGER REFERENCES "vaga" ("id") ON DELETE CASCADE  ,
+    "prazo" DATE
+);
+success!
+timestamp: 2019-05-30T03:51:25.364000
+CREATE TABLE "processoCurriculo"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "idCurriculo" INTEGER REFERENCES "curriculo" ("id") ON DELETE CASCADE  ,
+    "idProcesso" INTEGER REFERENCES "processo" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T04:28:52.855000
+ALTER TABLE "auth_user" ADD "username" CHAR(128);
+timestamp: 2019-05-30T04:28:53.167000
+ALTER TABLE "auth_user" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2019-05-30T04:28:53.276000
+ALTER TABLE "auth_user" ADD "is_active" CHAR(1);
+timestamp: 2019-05-30T04:28:53.486000
+ALTER TABLE "auth_user" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2019-05-30T04:28:53.776000
+ALTER TABLE "auth_user" ADD "created_on" TIMESTAMP;
+timestamp: 2019-05-30T04:28:53.913000
+ALTER TABLE "auth_user" ADD "modified_on" TIMESTAMP;
+timestamp: 2019-05-30T04:28:54.057000
+ALTER TABLE "auth_user" ADD "bookmarks" CHAR(4096);
+success!
+timestamp: 2019-05-30T04:28:54.742000
+CREATE TABLE "message"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "context" CHAR(25),
+    "context_id" INTEGER,
+    "auth_user" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "direction" CHAR(8),
+    "is_read" CHAR(1),
+    "msg_sender" CHAR(100),
+    "msg_from" CHAR(100),
+    "msg_recipient" CHAR(100),
+    "msg_to" CHAR(100),
+    "msg_subject" CHAR(100),
+    "msg_body" CHAR(500),
+    "msg_html" CHAR(500),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T04:28:55.093000
+ALTER TABLE "auth_group" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2019-05-30T04:28:55.316000
+ALTER TABLE "auth_group" ADD "is_active" CHAR(1);
+timestamp: 2019-05-30T04:28:55.471000
+ALTER TABLE "auth_group" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2019-05-30T04:28:55.676000
+ALTER TABLE "auth_group" ADD "created_on" TIMESTAMP;
+timestamp: 2019-05-30T04:28:55.915000
+ALTER TABLE "auth_group" ADD "modified_on" TIMESTAMP;
+success!
+timestamp: 2019-05-30T04:28:56.353000
+ALTER TABLE "auth_membership" ADD "is_active" CHAR(1);
+timestamp: 2019-05-30T04:28:56.489000
+ALTER TABLE "auth_membership" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2019-05-30T04:28:56.617000
+ALTER TABLE "auth_membership" ADD "created_on" TIMESTAMP;
+timestamp: 2019-05-30T04:28:56.732000
+ALTER TABLE "auth_membership" ADD "modified_on" TIMESTAMP;
+timestamp: 2019-05-30T04:28:56.870000
+ALTER TABLE "auth_membership" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+success!
+timestamp: 2019-05-30T04:51:36.599000
+ALTER TABLE "auth_permission" ADD "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2019-05-30T04:51:36.828000
+ALTER TABLE "auth_permission" ADD "is_active" CHAR(1);
+timestamp: 2019-05-30T04:51:36.957000
+ALTER TABLE "auth_permission" ADD "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2019-05-30T04:51:37.159000
+ALTER TABLE "auth_permission" ADD "created_on" TIMESTAMP;
+timestamp: 2019-05-30T04:51:37.437000
+ALTER TABLE "auth_permission" ADD "modified_on" TIMESTAMP;
+success!
+timestamp: 2019-05-30T05:05:42.954000
+CREATE TABLE "person"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "title" CHAR(25),
+    "auth_user" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "addr_street" CHAR(50),
+    "addr_city" CHAR(50),
+    "addr_state" CHAR(50),
+    "addr_zip" CHAR(50),
+    "phone" CHAR(50),
+    "fax" CHAR(50),
+    "string_list" CHAR(25),
+    "status" INTEGER,
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T05:05:43.267000
+CREATE TABLE "dog"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "title" CHAR(100),
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T05:05:43.464000
+CREATE TABLE "dog_owner"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "person" INTEGER REFERENCES "person" ("id") ON DELETE CASCADE  ,
+    "dog" INTEGER REFERENCES "dog" ("id") ON DELETE CASCADE  ,
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T05:05:43.705000
+CREATE TABLE "avatar"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "image" CHAR(100),
+    "auth_user" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T05:05:43.930000
+CREATE TABLE "notification"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "title" CHAR(140),
+    "type" CHAR(15),
+    "is_read" CHAR(1),
+    "auth_user" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2019-05-30T05:05:44.216000
+CREATE TABLE "task"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "title" CHAR(140),
+    "criteria" TEXT,
+    "auth_user" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "is_active" CHAR(1),
+    "created_on" TIMESTAMP,
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "modified_on" TIMESTAMP,
+    "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
+);
+success!
