@@ -16,8 +16,10 @@ def list():
     items = db(query).select(orderby=~table.id).render()
 
     actions = [
-        {'is_item_action': lambda item: True, 'url': lambda item: URL('view.html', args=[item.id]), 'icon': 'search'},
-        {'is_item_action': lambda item: True, 'url': lambda item: URL('edit.html', args=[item.id]), 'icon': 'pencil'}
+        {'is_item_action': lambda item: True, 'url': lambda item: URL(
+            'view.html', args=[item.id]), 'icon': 'search'},
+        {'is_item_action': lambda item: True, 'url': lambda item: URL(
+            'edit.html', args=[item.id]), 'icon': 'pencil'}
     ]
 
     fields = [f for f in table]
@@ -37,19 +39,59 @@ def list():
 
 
 @auth.requires_login()
+def create_step2():
+    form = SQLFORM.factory(
+        Field("instituicao","string",label="Instituição",notnull=True),
+        Field("tipo","integer",label="Formação",notnull=True,requires = IS_IN_SET(((1,"Superior"),(2,"Técnico"),(3,"Médio"),(4,"Fundamental"),(5,"Não se aplica")))),
+        Field("curso","string",label="Curso",default="Não Se Aplica"),
+        Field("situacao","integer",label="Situação",notnull=True, requires = IS_IN_SET(((1,"Completo"),(2,"Incompleto"),(3,"Cursando")))),
+        Field("ano_inicio","date",label="Ano de Inicio",notnull=True,requires = IS_DATE(format=('%m/%d/%Y'))),
+        Field("ano_conclusao","date",label="Ano de Conclusão",notnull=True,requires = IS_DATE(format=('%m/%d/%Y'))),
+        hidden = dict(id_curriculo=session.data),
+        buttons = [BUTTON('Voltar', _type="button", _onClick="parent.location='%s'" %URL(request.controller, 'create')),BUTTON('Avançar', _type="submit")]
+    )
+    
+    form.vars.id_curriculo = session.data
+    if form.process().accepted:
+        db.formacao_academica.insert(**db.formacao_academica._filter_fields(form.vars))
+        response.flash = 'Formação Acadêmica Cadastrada'
+        redirect(URL(request.controller, 'create_step3'))
+    elif form.errors:
+        response.flash = 'Please correct the errors'
+
+    response.view = 'template/create.html'
+    return dict(item_name="Formação Acadêmica", form=form)
+
+
+
+@auth.requires_login()
+def create_step3():
+    form = SQLFORM.factory(
+     Field("empresa","string",label="Nome da Empresa",notnull=True),
+     Field("cargo","string",label="Cargo na Empresa",notnull=True),
+     Field("duracao","integer",label="Periodo (em meses)",notnull=True),
+     hidden = dict(id_curriculo=session.data),
+     buttons = [BUTTON('Voltar', _type="button", _onClick="parent.location='%s'" %URL(request.controller, 'create')),BUTTON('Avançar', _type="submit")]
+    )
+    
+    form.vars.id_curriculo = session.data
+    if form.process().accepted:
+        db.experiencia.insert(**db.experiencia._filter_fields(form.vars))
+        response.flash = 'Experiência Profissional Cadastrada'
+        redirect(URL(request.controller, 'list'))
+    elif form.errors:
+        response.flash = 'Please correct the errors'
+    response.view = 'template/create.html'
+    return dict(item_name="Experiência Profissional", form=form)
+
+@auth.requires_login()
 def create():
-    fields = [
-        'id',
-        'created_on', 'created_by',
-    ]
-    formacao = [(1,'Médio'),(2,"Superior")]
-    form = SQLFORM.factory(table,Field('Formacao', 'integer',
-                             requires=IS_IN_SET(formacao, zero='- escolha -')))
-    #form = SQLFORM(table)  # , fields=fields)
+    form = SQLFORM(table)
 
     if form.process().accepted:
-        session.flash = '%s created!' % table._singular
-        redirect(URL(request.controller, 'list'))
+        session.data = form.vars.id
+
+        redirect(URL(request.controller, 'create_step2'))
     elif form.errors:
         response.flash = 'Please correct the errors'
 

@@ -4,7 +4,7 @@
 
 <h4>
   <a href='{{=URL(request.controller, 'list', user_signature=True)}}'>
-    <i class="fa fa-list"> View {{=item_name}} List</i>
+    <i class="fa fa-list"> {{=item_name}}</i>
   </a>
 </h4>
 
@@ -14,7 +14,7 @@
   <div class="col-md-12">
     <div class="box box-default">
       <div class="box-header with-border">
-        <h3 class="box-title">Create {{=item_name}}</h3>
+        <h3 class="box-title">{{=item_name}}</h3>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
         </div><!-- /.box-tools -->
@@ -22,7 +22,7 @@
       <div class="box-body">
 
         {{=form}}
-
+        {{=list}}
       </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col --><!-- /Documents -->

@@ -139,22 +139,6 @@ def view():
 
 def send_mailgun_message(msg_to, msg_subject, msg_body):
 
-    sender_name = myconf.get('mailgun.sender_name')
-    sender_id = myconf.get('mailgun.sender_id')
-    sender_domain = myconf.get('mailgun.sender_domain')
-    private_api_key = myconf.get('mailgun.private_api_key')
-
-    requests.post(
-        "https://api.mailgun.net/v3/%s/messages" % sender_domain,
-        auth=("api", "%s" % private_api_key),
-        data={
-            "from": "%s <%s@%s>" % (sender_name, sender_id, sender_domain),
-            "to": msg_to,
-            "subject": msg_subject,
-            "text": msg_body
-        }
-    )
-
     return
 
 

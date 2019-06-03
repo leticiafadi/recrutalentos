@@ -218,8 +218,10 @@ def sidebar_menu_item(label, url=None, icon='link'):
 #     menu_item('Dog Owners', 'dog_owner', 'list', icon='home'),
 # ]
 
-def is_user_member(*roles):
-    if auth.user:
+def is_user_member(roles):
+    auth_group = auth.user_group(auth.user.id)
+    print(auth.has_membership(auth_group, auth.user.id, roles))
+    if auth.has_membership(auth_group, auth.user.id, roles):
         return True
     else:
         return False

@@ -120,7 +120,7 @@ desired effect
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 
-          {{if auth.user and is_user_member('admin'):}}
+          {{if auth.user :}}
 
               <!-- Messages Menu -->
               {{=LOAD('message', 'menu.load', ajax=True, content='')}}

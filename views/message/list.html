@@ -68,15 +68,9 @@
 
 <h4>
     <a href='{{=URL(request.controller, 'create')}}'>
-      <i class="fa fa-pencil"> Novo {{=item_name}}</i>
+      <i class="fa fa-pencil">{{=item_name}}</i>
     </a>
 </h4>
-
-<p>
-You can
-view <i class="fa fa-search"></i> more information.
-If you're authorized, you can also reply <i class="fa fa-reply"></i> to the {{=item_name}}.
-</p>
 
 <table id="{{=item_name.replace(' ','-')}}-datatable" class="display compact" cellspacing="0" width="100%">
   <thead>
