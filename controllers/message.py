@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import requests
+
 
 table = db.message
 response.view_title = '%s %s' % (

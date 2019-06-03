@@ -278,3 +278,5 @@ CREATE TABLE "task"(
     "modified_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  
 );
 success!
+success!
+success!

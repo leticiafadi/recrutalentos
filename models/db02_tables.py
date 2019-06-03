@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+
+
 Curriculo = db.define_table('curriculo',
 Field('nome', 'string', label='Nome', notnull=True),
 Field('cpf', 'string', label='CPF', notnull=True, unique=True),
@@ -7,7 +10,7 @@ Field('endereco', 'list:string', label='Endereço'),
 Field('form_academica', 'list:string', label='Formação Academica'),
 Field('foto', 'upload', label='Foto'),
 Field('experiencia', 'list:string', label='Experiencia Profissional'),
-Field('data_nascimento', 'date', label='Data de Nascimento'),
+Field('data_nascimento', 'date', label='Data de Nascimento', requires = IS_DATE(format=('%m/%d/%Y'))),
 Field('objetivo_setor', 'string', label='Setor')
 )
 

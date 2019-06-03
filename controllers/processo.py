@@ -1,5 +1,5 @@
 
-table = db.curriculo
+table = db.vaga
 response.view_title = '%s %s' % (
     request.function.replace('_', ' ').title(),
     table._singular
@@ -17,7 +17,8 @@ def list():
 
     actions = [
         {'is_item_action': lambda item: True, 'url': lambda item: URL('view.html', args=[item.id]), 'icon': 'search'},
-        {'is_item_action': lambda item: True, 'url': lambda item: URL('edit.html', args=[item.id]), 'icon': 'pencil'}
+        {'is_item_action': lambda item: True, 'url': lambda item: URL('edit.html', args=[item.id]), 'icon': 'pencil'},
+        {'is_item_action': lambda item: True, 'url': lambda item: URL('situacao', args=[item.id]), 'icon': 'cube'}
     ]
 
     fields = [f for f in table]
@@ -26,7 +27,7 @@ def list():
     #     table.created_on, table.created_by,
     # ]
 
-    response.view = 'template/list.%s' % request.extension
+    response.view = 'template/list.%s' % request.extensio;n
     return dict(
         item_name=table._singular,
         row_list=items,
@@ -42,10 +43,8 @@ def create():
         'id',
         'created_on', 'created_by',
     ]
-    formacao = [(1,'Médio'),(2,"Superior")]
-    form = SQLFORM.factory(table,Field('Formacao', 'integer',
-                             requires=IS_IN_SET(formacao, zero='- escolha -')))
-    #form = SQLFORM(table)  # , fields=fields)
+
+    form = SQLFORM(table)  # , fields=fields)
 
     if form.process().accepted:
         session.flash = '%s created!' % table._singular
@@ -109,3 +108,9 @@ def update():
         row.update_record()
 
     redirect(URL('list'))
+
+    
+@auth.requires_membership('admin')
+def situacao():
+     return dict()
+

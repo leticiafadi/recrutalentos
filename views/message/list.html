@@ -68,7 +68,7 @@
 
 <h4>
     <a href='{{=URL(request.controller, 'create')}}'>
-      <i class="fa fa-pencil"> Create New {{=item_name}}</i>
+      <i class="fa fa-pencil"> Novo {{=item_name}}</i>
     </a>
 </h4>
 
@@ -102,11 +102,14 @@ If you're authorized, you can also reply <i class="fa fa-reply"></i> to the {{=i
           <td>{{=row[field]}}</td>
         {{pass}}
         <td>
+          
           <a href='{{=URL('view', args=[row.id])}}'><i class="fa fa-search"></i></a>
           {{if row.direction == 'Received':}}
             &nbsp;
             <a href='{{=URL('reply', args=[row.id])}}'><i class="fa fa-reply"></i></a>
           {{pass}}
+          
+          
         </td>
       </tr>
     {{pass}}

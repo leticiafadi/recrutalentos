@@ -58,7 +58,7 @@
 
 <h4>
     <a href='{{=URL(request.controller, 'create.html', vars=request.vars)}}'>
-      <i class="fa fa-pencil"> Create New {{=item_name}}</i>
+      <i class="fa fa-pencil"> Novo {{=item_name}}</i>
     </a>
 </h4>
 

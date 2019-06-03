@@ -1,24 +1,24 @@
 {{#hidden = None if auth.user else 'hidden'}}
 
-{{if auth.user and is_user_member('admin'):}}
+{{if is_user_member("admin"):}}
 
 <ul class="sidebar-menu">
 
-    <li class="header">Dogs &amp; Owners</li>
+    <li class="header">Recrutalentos </li>
 
     <li class="treeview">
-    {{=sidebar_menu_item('Dogs', icon='suitcase')}}
+    {{=sidebar_menu_item('Processos', icon='suitcase')}}
         <ul class="treeview-menu">
-        {{=sidebar_menu_item('View Dogs', URL('dog', 'list'), icon='list')}}
-        {{=sidebar_menu_item('Create Dog', URL('dog', 'create'), icon='pencil-square-o')}}
+        {{=sidebar_menu_item('Ver Processos', URL('processo', 'list'), icon='list')}}
+        {{=sidebar_menu_item('Criar Vaga', URL('processo', 'create'), icon='pencil-square-o')}}
         </ul>
     </li>
 
     <li class="treeview">
-    {{=sidebar_menu_item('Owners', icon='university')}}
+    {{=sidebar_menu_item('Curriculos', icon='user-plus')}}
         <ul class="treeview-menu">
-        {{=sidebar_menu_item('View Owners', URL('person', 'list'), icon='list')}}
-        {{=sidebar_menu_item('Create Owner', URL('person', 'create'), icon='pencil-square-o')}}
+        {{=sidebar_menu_item('Listar Curriculos', URL('curriculo', 'list'), icon='list')}}
+        {{=sidebar_menu_item('Cadastrar Curriculo', URL('curriculo', 'create'), icon='pencil-square-o')}}
         </ul>
     </li>
 
@@ -52,7 +52,7 @@
 {{pass}}
 
 <!-- Company Info for Guests -->
-
+<!-- 
 <ul class="sidebar-menu">
 
     <li class="header">COMPANY</li>
@@ -61,4 +61,4 @@
 {{=sidebar_menu_item('Privacy', URL('default', 'privacy'), icon='book')}}
 {{=sidebar_menu_item('Terms of Use', URL('default', 'tou'), icon='book')}}
 
-</ul>
+</ul> -->
