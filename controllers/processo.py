@@ -42,7 +42,7 @@ def create():
     form = SQLFORM.factory(
         Field('nome', 'string', label='Nome'),
         Field("form_academica","integer",label="Formação Acadêmica",notnull=True,requires = IS_IN_SET(((1,"Superior"),(2,"Técnico"),(3,"Médio"),(4,"Fundamental"),(5,"Não se aplica")))),
-        Field('experiencia', 'integer', label='Experiencia Profissional'),
+        Field('experiencia', 'integer', label='Experiencia Profissional (em meses)'),
         Field('localTrabalho', 'string', label='Local de Trabalho'),
         Field('horario_inicio', 'time', label='Horario de Entrada'),
         Field('horario_fim', 'time', label='Horario de Saida'),
@@ -56,7 +56,7 @@ def create():
     if form.process().accepted:
         id = db.vaga.insert(**db.vaga._filter_fields(form.vars))
         db.processo.insert(etapa=1,idVaga=id,prazo = form.vars.prazo)
-
+        recrutalentos_pegaCurriculos(id)
         session.flash = "Vaga Adicionada com Sucesso"
         redirect(URL(request.controller, 'list'))
     elif form.errors:
@@ -122,5 +122,11 @@ def update():
     
 @auth.requires_membership('admin')
 def situacao():
-     return dict()
+    return dict()
 
+def recrutalentos_pegaCurriculos(id):
+    #TODO
+    pass
+
+def test():
+    return dict()
