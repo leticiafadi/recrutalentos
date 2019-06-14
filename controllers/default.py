@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ -*- coding: utf-8 -*-
 # this file is released under public domain and you can use without limitations
 
 
@@ -6,11 +6,10 @@ def index():
     """
     example action using the internationalization operator T and flash
     rendered by views/default/index.html or views/generic.html
-
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.view_title = myconf.get('app.name') + ' Home Page'
+    response.view_title = "Recrutalentos Home Page"
     return dict(message='')
 
 
@@ -66,3 +65,16 @@ def call():
     supports xml, json, xmlrpc, jsonrpc, amfrpc, rss, csv
     """
     return service()
+
+@request.restful()
+def api():
+    response.view = 'generic.json'
+
+    def GET(tablename, id):
+        if not tablename == 'curriculo':
+            raise HTTP(400)
+        return dict(curriculo = db.curriculo(id))
+    return locals()
+
+def tou():
+    return dict()
